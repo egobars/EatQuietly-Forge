@@ -1,11 +1,11 @@
 package net.egobars.eatquietly;
 
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -19,9 +19,11 @@ public class EventsHandler
     @SubscribeEvent
     public static void RightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         Entity entity = event.getEntity();
-        Level world = entity.level;
         if (entity instanceof Player) {
-            event.setCanceled(true);
+            Player playerEntity = (Player) entity;
+            if (event.getHand() == InteractionHand.OFF_HAND) {
+                event.setCanceled(true);
+            }
         }
     }
 }
